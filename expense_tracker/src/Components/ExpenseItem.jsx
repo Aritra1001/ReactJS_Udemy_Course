@@ -1,4 +1,6 @@
 import React from 'react';
+import ExpenseDate from './ExpenseDate';
+import Card from './Card';
 import './ExpenseItem.css';
 
 const ExpenseItem = (props) =>{
@@ -7,23 +9,15 @@ const ExpenseItem = (props) =>{
     // const expenseItem = 'Car Insurance';
     // const expenseAmt = 300.20;
 
-    const month = props.date.toLocaleString('en-US', {month: "long"});  //toLocaleSting takes two arguments - locales and options 
-    const day = props.date.toLocaleString('en-US', {day: '2-digit'});
-    const year = props.date.getFullYear();
-
     return(
         <>
-            <div className="expense-item">
-                <div>
-                    <div>{month}</div>
-                    <div>{day}</div>
-                    <div>{year}</div>
-                </div>
+            <Card className="expense-item">
+                <ExpenseDate date={props.date}/>
                 <div className="expense-item__description">
                     <h2>{props.title}</h2>
                     <div className="expense-item__price">${props.amount}</div>
                 </div>
-            </div>
+            </Card>
         </>
     )
 }
