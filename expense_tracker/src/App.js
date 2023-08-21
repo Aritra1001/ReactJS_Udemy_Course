@@ -2,6 +2,7 @@
 import "./App.css";
 import ExpenseItem from "./Components/Expenses/ExpenseItem";
 import Card from "./Components/UI/Card";
+import NewExpense from "./Components/NewExpense/NewExpense";
 
 function App() {
   const expenses = [
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <>
+      <NewExpense/>
       <Card className="expenses">
         <ExpenseItem
           title={expenses[0].title}
