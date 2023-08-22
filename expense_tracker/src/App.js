@@ -1,8 +1,7 @@
 // import logo from './logo.svg';
 import "./App.css";
-import ExpenseItem from "./Components/Expenses/ExpenseItem";
-import Card from "./Components/UI/Card";
 import NewExpense from "./Components/NewExpense/NewExpense";
+import Expenses from "./Components/Expenses/Expenses";
 
 function App() {
   const expenses = [
@@ -32,31 +31,15 @@ function App() {
     },
   ];
 
+  const handleSaveFormData = (savedData) =>{
+    console.log("In app.js");
+    console.log(savedData);
+  }
+
   return (
     <>
-      <NewExpense/>
-      <Card className="expenses">
-        <ExpenseItem
-          title={expenses[0].title}
-          amount={expenses[0].amount}
-          date={expenses[0].date}
-        />
-        <ExpenseItem
-          title={expenses[1].title}
-          amount={expenses[1].amount}
-          date={expenses[1].date}
-        />
-        <ExpenseItem
-          title={expenses[2].title}
-          amount={expenses[2].amount}
-          date={expenses[2].date}
-        />
-        <ExpenseItem
-          title={expenses[3].title}
-          amount={expenses[3].amount}
-          date={expenses[3].date}
-        />
-      </Card>
+      <NewExpense onSaveFormData = {handleSaveFormData} />
+      <Expenses expenses={expenses}/>
     </>
   );
 }
