@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./Expenses.css";
 import Card from "../UI/Card";
-import ExpenseItem from "./ExpenseItem";
 import ExpensesFilter from "./ExpensesFilter";
+import ExpenseList from "./ExpenseList";
 
 const Expenses = (props) => {
   const [filteredYear, setFilteredYear] = useState(2022);
@@ -12,9 +12,9 @@ const Expenses = (props) => {
     setFilteredYear(filterYear);
   };
 
-  const filteredExpenses = props.expenses.filter((item)=>{
-    return item.date.getFullYear().toString() === filteredYear
-  })
+  const filteredExpenses = props.expenses.filter((item) => {
+    return item.date.getFullYear().toString() === filteredYear;
+  });
 
   return (
     <>
@@ -23,17 +23,41 @@ const Expenses = (props) => {
           selected={filteredYear}
           onFilterChangeData={handleFilterChange}
         />
-        {filteredExpenses.map((item) => {
-          return (
-            <div key={item.id}>
-              <ExpenseItem
-                title={item.title}
-                amount={item.amount}
-                date={item.date}
-              />
-            </div>
-          );
-        })}
+
+        {/* Conditional statements using ternary operator */}
+        {/* {filteredExpenses.length === 0 ? (
+          <p>No expenses found.</p>
+        ) : (
+          filteredExpenses.map((item) => {
+            return (
+              <div key={item.id}>
+                <ExpenseItem
+                  title={item.title}
+                  amount={item.amount}
+                  date={item.date}
+                />
+              </div>
+            );
+          })
+        )} */}
+
+        {/* Using Logical && operator */}
+        {/* {filteredExpenses.length === 0 && <p>No Expenses FOund.</p>}
+        {filteredExpenses.length > 0 &&
+          filteredExpenses.map((item) => {
+            return (
+              <div key={item.id}>
+                <ExpenseItem
+                  title={item.title}
+                  amount={item.amount}
+                  date={item.date}
+                />
+              </div>
+            );
+          })} */}
+
+          {/* Another alternative for lean jsx code */}
+          <ExpenseList items={filteredExpenses}/>
       </Card>
     </>
   );
