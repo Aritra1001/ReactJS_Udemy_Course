@@ -7,19 +7,23 @@ import UsersList from './Components/Users/UsersList';
 function App() {
 
   const [enteredData, setEnteredData] = useState([]);
+  const [input, setInput] = useState(null);
 
   const formDataHandler = (uName, uAge) => {
     // console.log("app.js");
     console.log(uName, uAge);
+    const formData = {name: uName, age:uAge, id: Math.random().toString()}
     setEnteredData((prevUsersList) => {
-        return [...prevUsersList, {name: uName, age:uAge, id: Math.random().toString()}]
+        return [...prevUsersList, formData]
     });
+    setInput(formData);
   }
 
   return (
     <>
       <AddUser onUserFormData={formDataHandler}/>
-      <UsersList users={enteredData}/>
+      {!input && <p style={{textAlign: 'center', color: 'white'}}>No User Data found. Maybe add one?</p>}
+      {input && <UsersList users={enteredData}/>}
     </>
   );
 }
