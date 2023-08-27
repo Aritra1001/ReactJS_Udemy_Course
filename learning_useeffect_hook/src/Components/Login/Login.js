@@ -19,7 +19,8 @@ const Login = (props) => {
       );
     }, 1000)
   
-    return () => {
+    return () => {   /**This is the cleanup function in use effect hook, it does execute with every key stroke and thus clearing the timeout for
+    the last execution of the code written in the settimeout in useEffect. */           
       console.log("CLeanup");
       clearTimeout(identifier);
     }
