@@ -50,16 +50,16 @@ const Login = (props) => {
     };
   }, []);
 
-  const {isValid: emailIsValid} = emailState;   /*We are using this to set dependency of the useEffect to these, so that once the credentials
-    have met the valid conditions and we enter more to those credentials, it should not check again for validity. We are passing a 
-    specific property as dependency instead of whole object. */
-  const {isValid: passwordIsValid} = passState;
+  // const {isValid: emailIsValid} = emailState; 
+  const {isValid: passwordIsValid} = passState;     /*We are using this to set dependency of the useEffect to these, so that once the credentials
+  have met the valid conditions and we enter more to those credentials, it should not check again for validity. We are passing a 
+  specific property as dependency instead of whole object. */
 
   useEffect(() => {
     const identifier = setTimeout(() => {
       console.log('Checking form validity!');
       setFormIsValid(
-        emailIsValid && passwordIsValid
+        emailState.value.includes('@') && passwordIsValid
       );
     }, 500);
 
@@ -67,7 +67,7 @@ const Login = (props) => {
       console.log('CLEANUP');
       clearTimeout(identifier);
     };
-  }, [emailIsValid, passwordIsValid]);
+  }, [emailState.value, passwordIsValid]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", val: event.target.value }); //dispatch function contains a type and a payload
