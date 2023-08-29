@@ -3,6 +3,11 @@ import styles from './MealItemForm.module.css';
 import Input from '../../UI/Input';
 
 const MealItemForm = (props) => {
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+  }
+
   return (
     <>
         <form className={styles.form}>
@@ -14,7 +19,7 @@ const MealItemForm = (props) => {
                 step: '1',
                 defaultValue: '1'
             }}/>
-            <button>+ Add</button>
+            <button onClick={submitHandler}>+ Add</button>
         </form>
     </>
   )
