@@ -26,6 +26,9 @@ const CartProvider = (props) => {
 
   // First we will check whether the item is already there in the cart, if its there we will just increase the count of that item in cart.
   // If its not there in cart we will add a new item.
+
+  // Now we want that addItemToCartHandler is called and for that we need to go to a place where we want to call addItem in our context object
+  // that is in the MealItemForm compo.
   const addItemToCartHandler = (item) => {
     dispatchCartAction({type: 'ADD', item: item})
   };
