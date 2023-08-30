@@ -5,7 +5,12 @@ import styles from './HeaderCartButton.module.css';
 
 const HeaderCartButton = (props) => {
 
-  useContext(CartContext);
+  // By using useContext in this component, this component will be re-evaluated whenever the context is updated.
+
+  let ctxData = useContext(CartContext);
+  let numberOfCartItems = ctxData.items.reduce((currNumber, item)=>{
+    return currNumber + item.amount;
+  }, 0)
 
   return (
     <>
@@ -14,7 +19,7 @@ const HeaderCartButton = (props) => {
                 <CartIcon/>
             </span>
             <span >Your Cart</span>
-            <span className={styles.badge}>3</span>
+            <span className={styles.badge}>{numberOfCartItems}</span>
         </button>
     </>
   )
