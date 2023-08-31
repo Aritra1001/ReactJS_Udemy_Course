@@ -12,14 +12,13 @@ const cartReducer = (state, action) => {
   if(action.type === 'ADD'){
     let updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount;
 
-    let existingCartItemIndex = state.items.findIndex((item)=> item.id === action.item.id);
+    let existingCartItemIndex = state.items.findIndex(item=> item.id === action.item.id);
     let existingCartItem = state.items[existingCartItemIndex];
-
     let updatedItems;
+
     if(existingCartItem){
       const updatedItem = {
-        ...existingCartItem,
-        amount: existingCartItem.amount + action.item.amount
+        ...existingCartItem, amount: existingCartItem.amount + action.item.amount
       }
       updatedItems = [...state.items];
       updatedItems[existingCartItemIndex] = updatedItem;
@@ -33,26 +32,28 @@ const cartReducer = (state, action) => {
       totalAmount: updatedTotalAmount
     }
   }
+
   if(action.type === 'REMOVE'){
-    let existingCartItemIndex = state.items.findIndex((item)=> item.id === action.id);
-    let existingItem = state.items[existingCartItemIndex];
-    console.log(existingItem, existingCartItemIndex);
-    let updatedTotalAmount = state.totalAmount - existingItem.price;
+    const existingCartItemIndex = state.items.findIndex(item=> item.id === action.id);
+    const existingCartItem = state.items[existingCartItemIndex];
+    let updatedTotalAmount = state.totalAmount - existingCartItem.price;
     let updatedItems;
-    if(existingItem.amount === 1){
-      updatedItems = state.items.filter(item=> item.id !== action.id);
+    if(existingCartItem.amount === 1){
+      updatedItems = state.items.filter((item)=> item.id !== action.id);
     }
     else{
-      const updatedItem = {...existingItem, amount: existingItem.amount - 1}
+      const updatedItem = {...existingCartItem, amount: existingCartItem.amount - 1};
       updatedItems = [...state.items];
       updatedItems[existingCartItemIndex] = updatedItem;
     }
+
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount
     }
   }
-  return defaultCartState
+
+  return defaultCartState;
 }
 
 const CartProvider = (props) => {

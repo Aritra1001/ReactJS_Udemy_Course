@@ -27,9 +27,12 @@ const Cart = (props) => {
               name= {item.name}
               price= {item.price}
               amount= {item.amount}
+              onRemove= {cartItemRemoveHandler.bind(null, item.id)} 
+              /* bind pre configures the function for future execution and also pre-configures 
+              the argument that function will receive when it is executed  */
               onAdd= {cartItemAddHandler.bind(null, item)}
-              onRemove= {cartItemRemoveHandler(null, item.id)}
             />
+            // <li>{item.name}</li>
         );
       })}
     </ul>
