@@ -6,6 +6,7 @@ import { useState } from "react";
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMoviesHandler = async () => {
     // Handling the data using promise
@@ -25,6 +26,7 @@ function App() {
     //   });
 
     // Handling the data using async/await
+    setIsLoading(true);
     const response = await fetch("https://swapi.dev/api/films");
     const data = await response.json();
     const transformedMovies = data.results.map((item) => {
@@ -36,6 +38,7 @@ function App() {
       };
     });
     setMovies(transformedMovies);
+    setIsLoading(false);
   };
 
   return (
@@ -43,15 +46,12 @@ function App() {
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
-      {movies.length === 0 ? (
-        <p style={{ color: "#fff", textAlign: "center" }}>
-          Click on the button to load movies
-        </p>
-      ) : (
-        <section>
-          <MoviesList movies={movies} />
-        </section>
-      )}
+
+      <section>
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && movies.length > 0 && <MoviesList movies={movies} />}
+        {!isLoading && movies.length === 0 && <p>No movies found.</p>}
+      </section>
     </React.Fragment>
   );
 }
