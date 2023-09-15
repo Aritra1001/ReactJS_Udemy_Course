@@ -7,6 +7,9 @@ import Checkout from "./Checkout";
 
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [didSubmit, setDidSubmit] = useState(false);
+
   const ctxData = useContext(CartContext);
 
   const totalAmount = ctxData.totalAmount.toFixed(2);
@@ -57,16 +60,55 @@ const Cart = (props) => {
     </div>
   );
 
+  const sendingCartData = async(userData) => {
+    setIsSubmitting(true);
+    await fetch("https://react-http-9f1bd-default-rtdb.firebaseio.com/orders.json", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        orderedItems: ctxData.items,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setIsSubmitting(false);
+    setDidSubmit(true);
+    ctxData.clearCart();
+  };
+
+  const modalContent = (
+    <>
+      {" "}
+      {cartItem}
+      <div className={styles.total}>
+        <span>Total Amount</span>
+        <span>{`$${totalAmount}`}</span>
+      </div>
+      {isCheckout && (
+        <Checkout onConfirm={sendingCartData} onClose={props.onHideCart} />
+      )}
+      {!isCheckout && cartActions}
+    </>
+  );
+
+  const onSubmitModalContent = <p>Sending Order Data...</p>
+
+  const afterSubmitModalContent = <>
+    <p>Order Sent Successfully</p>
+    <div className={styles.actions}>
+      <button className={styles["button--alt"]} onClick={props.onHideCart}>
+        Close
+      </button>
+    </div>
+  </>
+
   return (
     <>
       <Modal onClose={props.onHideCart}>
-        {cartItem}
-        <div className={styles.total}>
-          <span>Total Amount</span>
-          <span>{`$${totalAmount}`}</span>
-        </div>
-        {isCheckout && <Checkout onClose={props.onHideCart}/>}
-        {!isCheckout && cartActions}
+        {!isSubmitting && !didSubmit && modalContent}
+        {isSubmitting && onSubmitModalContent}
+        {!isSubmitting && didSubmit && afterSubmitModalContent}
       </Modal>
     </>
   );
