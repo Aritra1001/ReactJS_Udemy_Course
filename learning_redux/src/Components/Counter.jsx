@@ -1,26 +1,29 @@
 import classes from "./Counter.module.css";
 // import { Component } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { counterActions } from "../store/counter";
 
 const Counter = () => {
-  const counter = useSelector((state) => state.counter); //useSelector hook etablishes the subscription to the redux store for thic component
-  const show = useSelector((state) => state.showCounter);
+  const counter = useSelector((state) => state.counter.counter); //useSelector hook etablishes the subscription to the redux store for this component
+  const show = useSelector((state) => state.counter.showCounter);
   const dispatch = useDispatch();
 
   const toggleCounterHandler = () => {
-    dispatch({ type: "toggle" });
+    dispatch(counterActions.toggleCounter());
   };
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterActions.increment());
   };
 
   const increaseHandler = () => {
-    dispatch({ type: "increase", amount: 5 });
+    dispatch(counterActions.increase(5)); /**Here by redux toolkit an action object is created {type: SOME UNIQUE IDENTIFIER, payload: 5}
+    The value we pass as the argument to the function will be the value for payload property. */ 
+    // To this method we pass our payload data
   };
 
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
 
   return (
